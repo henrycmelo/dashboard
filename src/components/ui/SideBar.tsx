@@ -3,7 +3,7 @@
 import { Box, VStack, Text, Icon, HStack, Image, Flex } from "@chakra-ui/react";
 import {
   FiHome,
-  FiBarChart2,
+  FiPieChart,
   FiUsers,
   FiFileText,
   FiSettings,
@@ -14,8 +14,8 @@ import Link from "next/link";
 
 const menuItems = [
   { icon: FiHome, label: "Overview", href: "/" },
-  { icon: FiMap, label: "Client Distribution", href: "/map" },
-  { icon: FiBarChart2, label: "Service Analysis", href: "/service-analysis" },
+  { icon: FiPieChart, label: "Service Analysis", href: "/service-analysis" },
+   { icon: FiMap, label: "Client Distribution", href: "/map" },
   { icon: FiUsers, label: "Client Progress", href: "/client-progress" },
   { icon: FiFileText, label: "Report Generator", href: "/report-generator" },
   { icon: FiSettings, label: "Settings", href: "#" },

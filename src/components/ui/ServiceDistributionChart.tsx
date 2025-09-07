@@ -29,6 +29,9 @@ export default function ServiceDistributionChart() {
         "0 1px 2px -1px rgba(0, 0, 0, 0.10), 0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 0 0 0 rgba(0, 0, 0, 0.00), 0 0 0 0 rgba(0, 0, 0, 0.00)"
       }
       p={5}
+      minH="400px" 
+      w="100%"
+      h="100%" 
     >
       <Text fontSize="md" fontWeight="600" mb={4} color={'brand.primary'}>
         Client Distribution by Service Type

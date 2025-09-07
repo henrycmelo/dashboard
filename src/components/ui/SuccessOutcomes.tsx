@@ -4,49 +4,54 @@ import { Box, Text, VStack, HStack } from '@chakra-ui/react'
 import { Progress } from '@chakra-ui/react/progress'
 
 const outcomes = [
-  { label: 'Goals Achieved', value: 44, count: '1248 clients', color: 'green.500' },
-  { label: 'In Progress', value: 31, count: '876 clients', color: 'orange.500' },
-  { label: 'Needs Support', value: 17, count: '482 clients', color: 'red.500' },
-  { label: 'Recently Enrolled', value: 8, count: '241 clients', color: 'gray.500' },
+  { label: 'Goals Achieved', value: 44, count: '1248 clients', color: 'brand.success' },
+  { label: 'In Progress', value: 31, count: '876 clients', color: 'brand.warning' },
+  { label: 'Needs Support', value: 17, count: '482 clients', color: 'brand.error' },
+  { label: 'Recently Enrolled', value: 8, count: '241 clients', color: 'brand.secondary' },
 ]
 
 export default function SuccessOutcomes() {
   return (
-    <Box bg="white" p={6} borderRadius="lg" border="1px solid" borderColor="gray.200">
-      <Text fontSize="lg" fontWeight="600" mb={6}>
-        Client Success Outcomes
+    <Box bg="white" p={5} borderRadius="lg"
+      boxShadow={
+        "0 1px 2px -1px rgba(0, 0, 0, 0.10), 0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 0 0 0 rgba(0, 0, 0, 0.00), 0 0 0 0 rgba(0, 0, 0, 0.00)"
+      }
+      minH="400px"
+      w="100%"
+      h="100%" 
+      >
+      <Text fontSize="md" fontWeight="600" mb={4} color={'brand.primary'}>
+        Client Outcome by Status
       </Text>
       
-      <VStack align="stretch" gap={5}>
-        {outcomes.map((outcome) => (
-          <Box key={outcome.label}>
-            <HStack justify="space-between" mb={2}>
-              <Text fontSize="sm" color="gray.700">{outcome.label}</Text>
-              <HStack gap={6}>
-                <Text fontSize="sm" fontWeight="600">{outcome.value}%</Text>
-                <Text fontSize="xs" color="gray.500" minW="80px" textAlign="right">
-                  {outcome.count}
-                </Text>
-              </HStack>
-            </HStack>
-            <Progress.Root value={outcome.value} size="sm">
-              <Progress.Track borderRadius="full" bg="gray.100">
-                <Progress.Range bg={outcome.color} borderRadius="full" />
-              </Progress.Track>
-            </Progress.Root>
-          </Box>
-        ))}
-      </VStack>
+      <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap={5}>
+  {outcomes.map((outcome) => (
+    <Box key={outcome.label} bg={"brand.bg"} p={3} borderRadius="md">
+      <HStack justify="space-between" mb={2}>
+        <Text fontSize="sm" color="brand.primary">{outcome.label}</Text>
+        <Text fontSize="sm" fontWeight="600" color="brand.primary">{outcome.value}%</Text>
+      </HStack>
+      <Progress.Root value={outcome.value} size="sm">
+        <Progress.Track borderRadius="full" bg="brand.bgprogress">
+          <Progress.Range bg={outcome.color} borderRadius="full" />
+        </Progress.Track>
+      </Progress.Root>
+      <Text fontSize="xs" color="brand.secondary" textAlign="right" mt={1}>
+        {outcome.count}
+      </Text>
+    </Box>
+  ))}
+</Box>
       
-      <Box mt={6} pt={6} borderTop="1px solid" borderColor="gray.200">
-        <Text fontSize="sm" color="gray.600" mb={2}>Overall Success Rate</Text>
+      <Box mt={6} pt={6} borderTop="1px solid" borderColor="brand.divider">
+        <Text fontSize="sm" color="brand.primary" mb={2}>Overall Success Rate</Text>
         <HStack justify="space-between" align="center">
-          <Text fontSize="xs" color="gray.500">Success Metrics</Text>
-          <Text fontSize="sm" fontWeight="600">78% success rate</Text>
+          <Text fontSize="xs" color="brand.secondary">Success Metrics</Text>
+          <Text fontSize="sm" color="brand.primary" fontWeight="600">78% Goal Achievement Rate (YTD)</Text>
         </HStack>
         <Progress.Root value={78} size="sm" mt={2}>
-          <Progress.Track borderRadius="full" bg="gray.100">
-            <Progress.Range bg="blue.500" borderRadius="full" />
+          <Progress.Track borderRadius="full" bg="brand.bgprogress">
+            <Progress.Range bg="brand.iconBlue" borderRadius="full" />
           </Progress.Track>
         </Progress.Root>
       </Box>
