@@ -1,106 +1,114 @@
-'use client'
+"use client";
 
-import { Box, VStack, Text, Icon, HStack } from '@chakra-ui/react'
-import { 
-  FiHome, 
-  FiBarChart2, 
-  FiUsers, 
-  FiFileText, 
+import { Box, VStack, Text, Icon, HStack, Image, Flex } from "@chakra-ui/react";
+import {
+  FiHome,
+  FiBarChart2,
+  FiUsers,
+  FiFileText,
   FiSettings,
-  FiMap
-} from 'react-icons/fi'
-import { usePathname } from 'next/navigation'
-import Link from 'next/link'
+  FiMap,
+} from "react-icons/fi";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const menuItems = [
-  { icon: FiHome, label: 'Overview', href: '/' },
-  { icon: FiMap, label: 'Client Distribution', href: '/map' },
-  { icon: FiBarChart2, label: 'Service Analysis', href: '/service-analysis' },
-  { icon: FiUsers, label: 'Client Progress', href: '/client-progress' },
-  { icon: FiFileText, label: 'Report Generator', href: '/report-generator' },
-  { icon: FiSettings, label: 'Settings', href: '#' },
-]
+  { icon: FiHome, label: "Overview", href: "/" },
+  { icon: FiMap, label: "Client Distribution", href: "/map" },
+  { icon: FiBarChart2, label: "Service Analysis", href: "/service-analysis" },
+  { icon: FiUsers, label: "Client Progress", href: "/client-progress" },
+  { icon: FiFileText, label: "Report Generator", href: "/report-generator" },
+  { icon: FiSettings, label: "Settings", href: "#" },
+];
 
 export default function Sidebar() {
-  const pathname = usePathname()
-  
+  const pathname = usePathname();
+
   return (
     <Box
       w="250px"
       h="100vh"
       bg="white"
       borderRight="1px solid"
-      borderColor="gray.200"
-      p={4}
+      borderColor="brand.divider"
+      position="relative"
     >
       {/* Logo */}
-      <Box mb={8} px={3}>
-        <HStack gap={2}>
-          <Box 
-            bg="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-            w="40px"
-            h="40px"
-            borderRadius="lg"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            color="white"
-            fontWeight="bold"
-            fontSize="sm"
-          >
-            ciana
-          </Box>
-        </HStack>
-      </Box>
+      <Flex
+        px={6}
+        py={4}
+        borderBottom="1px solid"
+        borderColor="brand.divider"
+        align="center"
+        justify="flex-start"
+      >
+        <Image
+          src="/cianaLogo.png"
+          alt="Ciana Logo"
+          h="40px"
+          w="100%"
+          maxW="100%"
+          objectFit="contain"
+        />
+      </Flex>
 
+      {/* Menu Items */}
       <VStack align="stretch" gap={1}>
         {menuItems.map((item) => {
-          const isActive = pathname === item.href
+          const isActive = pathname === item.href;
           return (
-            <Link key={item.label} href={item.href} style={{ textDecoration: 'none' }}>
+            <Link
+              key={item.label}
+              href={item.href}
+              style={{ textDecoration: "none" }}
+            >
               <HStack
                 p={3}
                 borderRadius="md"
-                bg={isActive ? 'blue.50' : 'transparent'}
-                color={isActive ? 'blue.600' : 'gray.600'}
+                bg={isActive ? "brand.selected" : "transparent"}
+                color={isActive ? "brand.links" : "brand.secondary"}
                 cursor="pointer"
-                _hover={{ bg: isActive ? 'blue.50' : 'gray.50' }}
+                _hover={{ bg: isActive ? "brand.selected" : "brand.selected" }}
                 gap={3}
               >
                 <Icon fontSize="20px">
                   <item.icon />
                 </Icon>
-                <Text fontSize="sm" fontWeight={isActive ? '500' : '400'}>
+                <Text fontSize="sm" fontWeight={isActive ? "500" : "400"}>
                   {item.label}
                 </Text>
               </HStack>
             </Link>
-          )
+          );
         })}
       </VStack>
 
-      <Box position="absolute" bottom={4} left={4} right={4}>
-        <HStack gap={3} p={3}>
+      <Box position="absolute" bottom={0} left={0} right={0} borderTop={"1px solid"} borderColor="brand.divider" p={3} >
+        <HStack gap={3} >
           <Box
             w="32px"
             h="32px"
             borderRadius="full"
-            bg="blue.500"
+            bg="brand.iconBlue"
             display="flex"
             alignItems="center"
             justifyContent="center"
-            color="white"
+            color="brand.white"
             fontSize="sm"
             fontWeight="bold"
           >
             SC
           </Box>
           <Box>
-            <Text fontSize="sm" fontWeight="500">Sofia Rodriguez</Text>
-            <Text fontSize="xs" color="gray.500">Program Director</Text>
+            <Text fontSize="sm" color={'brand.primary'} fontWeight="500">
+              Sofia Rodriguez
+            </Text>
+            <Text fontSize="xs" color="brand.secondary">
+              Program Director
+            </Text>
           </Box>
         </HStack>
       </Box>
     </Box>
-  )
+  );
 }

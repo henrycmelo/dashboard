@@ -1,52 +1,74 @@
-'use client'
+"use client";
 
-import { Box, Text, VStack, HStack } from '@chakra-ui/react'
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
+import { Box, Text, VStack, HStack, useToken } from "@chakra-ui/react";
+import { use } from "react";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 const data = [
-  { name: 'ESL Classes', value: 30, color: '#10B981' },
-  { name: 'Legal', value: 30, color: '#F59E0B' },
-  { name: 'Health', value: 30, color: '#8B5CF6' },
-]
+  { name: "ESL Classes", value: 30, color: "brand.eslGreen" },
+  { name: "Legal", value: 30, color: "brand.legalYellow" },
+  { name: "Health", value: 30, color: "brand.purpleHealth" },
+];
 
 export default function ServiceDistributionChart() {
+  const colors = useToken(
+    "colors",
+    data.map((item) => item.color)
+  );
+
+  const chartData = data.map((item, index) => ({
+    ...item,
+    actualColor: colors[index],
+  }));
+
   return (
-    <Box bg="white" p={6} borderRadius="lg" border="1px solid" borderColor="gray.200">
-      <Text fontSize="lg" fontWeight="600" mb={4}>
+    <Box
+      bg="white"
+      borderRadius="lg"
+      boxShadow={
+        "0 1px 2px -1px rgba(0, 0, 0, 0.10), 0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 0 0 0 rgba(0, 0, 0, 0.00), 0 0 0 0 rgba(0, 0, 0, 0.00)"
+      }
+      p={5}
+    >
+      <Text fontSize="md" fontWeight="600" mb={4} color={'brand.primary'}>
         Client Distribution by Service Type
       </Text>
-      
+
       <Box h="250px" mb={4}>
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
-              data={data}
+              data={chartData}
               cx="50%"
               cy="50%"
-              innerRadius={60}
+              innerRadius={40}
               outerRadius={90}
               paddingAngle={2}
               dataKey="value"
             >
-              {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.color} />
+              {chartData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.actualColor} />
               ))}
             </Pie>
           </PieChart>
         </ResponsiveContainer>
       </Box>
-      
+
       <VStack align="stretch" gap={2}>
         {data.map((item) => (
           <HStack key={item.name} justify="space-between">
             <HStack gap={2}>
               <Box w="12px" h="12px" borderRadius="full" bg={item.color} />
-              <Text fontSize="sm" color="gray.600">{item.name}</Text>
+              <Text fontSize="sm" color="brand.secondary">
+                {item.name}
+              </Text>
             </HStack>
-            <Text fontSize="sm" color="gray.500">({item.value}%)</Text>
+            <Text fontSize="sm" color="brand.secondary">
+              ({item.value}%)
+            </Text>
           </HStack>
         ))}
       </VStack>
     </Box>
-  )
+  );
 }

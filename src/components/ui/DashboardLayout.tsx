@@ -10,7 +10,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <Sidebar />
       <Box flex="1" display="flex" flexDirection="column">
         <Header />
-        <Box flex="1" overflow="auto">
+        <Box flex="1" overflow="auto" bg={'brand.bg'}>
           {children}
         </Box>
       </Box>

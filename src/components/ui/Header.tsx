@@ -4,55 +4,37 @@ import {
   Box, 
   Flex, 
   Text, 
-  Input, 
   Button, 
   HStack,
   Icon
 } from '@chakra-ui/react'
-import { FiSearch, FiDownload, FiBell } from 'react-icons/fi'
+import { FiDownload, FiBell } from 'react-icons/fi'
 
 export default function Header() {
   return (
-    <Box bg="white" px={6} py={4} borderBottom="1px solid" borderColor="gray.200">
+    <Box bg="brand.white" px={6} py={4} borderBottom="1px solid" borderColor="brand.divider">
       <Flex justify="space-between" align="center">
-        <Text fontSize="lg" fontWeight="500" color="gray.800">
+        <Text fontSize="lg" fontWeight="500" color="brand.primary">
           Immigrant Support Services Dashboard
         </Text>
 
         <HStack gap={3}>
-          {/* Search Bar */}
-          <Box position="relative">
-            <Icon position="absolute" left={3} top="50%" transform="translateY(-50%)" color="gray.400">
-              <FiSearch />
-            </Icon>
-            <Input
-              placeholder="Search clients..."
-              pl={10}
-              w="300px"
-              bg="gray.50"
-              border="1px solid"
-              borderColor="gray.200"
-              _focus={{
-                borderColor: 'blue.400',
-                bg: 'white'
-              }}
-            />
-          </Box>
-
           {/* Notification Icon */}
-          <Button variant="ghost" p={2}>
-            <Icon fontSize="20px" color="gray.600">
+          <Button variant="ghost" color="brand.secondary" p={2} _hover={{ bg: 'transparent', color:"brand.primary" }}>
+            <Icon fontSize="20px" >
               <FiBell />
             </Icon>
           </Button>
 
           {/* Export Button */}
           <Button
-            bg="blue.500"
-            color="white"
-            _hover={{ bg: 'blue.600' }}
+            bg="brand.links"
+            color="brand.white"
+            _hover={{ bg: 'brand.linksHover' }}
+            gap={2}
           >
-           <FiDownload />Export
+            <FiDownload />
+            Export
           </Button>
         </HStack>
       </Flex>

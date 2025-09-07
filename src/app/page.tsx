@@ -1,71 +1,41 @@
-import { Box, Text, HStack, Button, Flex } from '@chakra-ui/react'
-import { FiUsers, FiBookOpen, FiShield, FiHeart, FiFilter, FiChevronDown } from 'react-icons/fi'
+'use client'
+
+import { Box, Text, Flex } from '@chakra-ui/react'
+import { FiUsers, FiBookOpen, FiShield, FiHeart } from 'react-icons/fi'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import DashboardLayout from '@/components/ui/DashboardLayout'
 import StatCard from '@/components/ui/StatCard'
 import ServiceDistributionChart from '@/components/ui/ServiceDistributionChart'
 import SuccessOutcomes from '@/components/ui/SuccessOutcomes'
 
+// Monthly data for the bar chart
+const monthlyData = [
+  { month: 'Apr 24', clients: 6800 },
+  { month: 'May 24', clients: 7000 },
+  { month: 'Jun 24', clients: 7200 },
+  { month: 'Jul 24', clients: 7500 },
+  { month: 'Aug 24', clients: 7700 },
+  { month: 'Sep 24', clients: 7900 },
+  { month: 'Oct 24', clients: 8200 },
+  { month: 'Nov 24', clients: 8400 },
+  { month: 'Dec 24', clients: 8700 },
+  { month: 'Jan 25', clients: 9000 },
+  { month: 'Feb 25', clients: 9400 },
+  { month: 'Mar 25', clients: 10000 },
+]
+
 export default function Home() {
   return (
     <DashboardLayout>
       <Box p={6}>
-        {/* Dashboard Title and Filters */}
+        {/* Dashboard Title */}
         <Flex justify="space-between" align="center" mb={6}>
-          <Box>
-            <Text fontSize="2xl" fontWeight="bold" color="gray.800">
-              Client Services Dashboard
-            </Text>
-            <Text fontSize="sm" color="gray.500" mt={1}>
-              Last updated: Today at 9:41 AM
-            </Text>
-          </Box>
-          
-          <HStack gap={3}>
-            <Button
-              leftIcon={<FiFilter />}
-              variant="outline"
-              size="sm"
-              fontSize="sm"
-            >
-              Filters
-            </Button>
-            
-            <Button
-              rightIcon={<FiChevronDown />}
-              variant="outline"
-              size="sm"
-              fontSize="sm"
-            >
-              All Services
-            </Button>
-            
-            <Button
-              rightIcon={<FiChevronDown />}
-              variant="outline"
-              size="sm"
-              fontSize="sm"
-            >
-              Last 12 Months
-            </Button>
-            
-            <Button
-              variant="ghost"
-              size="sm"
-              fontSize="sm"
-              color="blue.500"
-            >
-              More Filters
-            </Button>
-            
-            <Button
-              variant="ghost"
-              size="sm"
-              fontSize="sm"
-              color="blue.500"
-            >
-              Reset
-            </Button>
-          </HStack>
+          <Text fontSize="2xl" fontWeight="bold" color="gray.800">
+            Analysis Overview
+          </Text>
+          <Text fontSize="sm" color="gray.500">
+            Last updated: Today at 9:41 AM
+          </Text>
         </Flex>
 
         {/* Stat Cards */}
@@ -76,8 +46,7 @@ export default function Home() {
               label="Total Clients Served"
               value="10,500"
               change="+14.3%"
-              color="blue"
-              bgColor="blue.500"
+              bgColor="brand.iconBlue"
             />
           </Box>
           
@@ -87,8 +56,7 @@ export default function Home() {
               label="Total ESL Participants"
               value="2,847"
               change="+14.3%"
-              color="green"
-              bgColor="green.500"
+              bgColor="brand.eslGreen"
             />
           </Box>
           
@@ -98,25 +66,23 @@ export default function Home() {
               label="Total Legal Cases"
               value="2,847"
               change="+14.3%"
-              color="yellow"
-              bgColor="yellow.500"
+              bgColor="brand.legalYellow"
             />
           </Box>
           
           <Box flex="1">
             <StatCard
               icon={<FiHeart />}
-              label="Healthcare Enrollments"
+              label="Total Healthcare"
               value="2,847"
               change="+14.3%"
-              color="purple"
-              bgColor="purple.500"
+              bgColor="brand.purpleHealth"
             />
           </Box>
         </Flex>
 
-        {/* Charts Section */}
-        <Flex gap={4}>
+        {/* Charts Section - First Row */}
+        <Flex gap={4} mb={6}>
           <Box flex="1">
             <ServiceDistributionChart />
           </Box>
@@ -125,6 +91,52 @@ export default function Home() {
             <SuccessOutcomes />
           </Box>
         </Flex>
+
+        {/* Bar Chart - Clients Served Last 12 Months */}
+        <Box bg="white" p={6} borderRadius="lg" border="1px solid" borderColor="gray.200">
+          <Text fontSize="lg" fontWeight="600" mb={4} color="gray.800">
+            Clients Served Last 12 Months
+          </Text>
+          
+          <Box h="300px">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={monthlyData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis 
+                  dataKey="month" 
+                  tick={{ fontSize: 12, fill: '#6b7280' }}
+                  axisLine={{ stroke: '#e5e7eb' }}
+                />
+                <YAxis 
+                  tick={{ fontSize: 12, fill: '#6b7280' }}
+                  axisLine={{ stroke: '#e5e7eb' }}
+                  domain={[0, 12000]}
+                  ticks={[0, 2000, 4000, 6000, 8000, 10000]}
+                />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'white', 
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '6px'
+                  }}
+                  labelStyle={{ fontWeight: 600, marginBottom: '4px' }}
+                />
+                <Legend 
+                  verticalAlign="bottom" 
+                  height={36}
+                  iconType="rect"
+                  wrapperStyle={{ fontSize: '14px' }}
+                />
+                <Bar 
+                  dataKey="clients" 
+                  fill="#3b82f6" 
+                  name="Last 12 Months"
+                  radius={[4, 4, 0, 0]}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </Box>
+        </Box>
       </Box>
     </DashboardLayout>
   )
