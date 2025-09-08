@@ -39,10 +39,10 @@ export default function Home() {
       <Box p={6}>
         {/* Dashboard Title */}
         <Flex justify="space-between" align="center" mb={6}>
-          <Text fontSize="2xl" fontWeight="bold" color="gray.800">
+          <Text fontSize="2xl" fontWeight="bold" color="brand.primary">
             Analysis Overview
           </Text>
-          <Text fontSize="sm" color="gray.500">
+          <Text fontSize="sm" color="brand.secondary">
             Last updated: Today at 9:41 AM
           </Text>
         </Flex>

@@ -261,22 +261,26 @@ export default function ServiceAnalysisPage() {
             <Menu.Root>
               <Menu.Trigger asChild>
                 <Button
-                  rightIcon={<FiChevronDown />}
                   variant="outline"
                   size="sm"
                   fontSize="sm"
-                  color="gray.700"
-                  width="220px"
+                  color="brand.primary"
+                  _hover={{ bg: "brand.bg" }}
                   textAlign="left"
                 >
-                  {serviceFilter === "All" ? "All Services" : serviceFilter}
+                  {serviceFilter === "All" ? "All Services" : serviceFilter}{" "}
+                  <FiChevronDown />
                 </Button>
               </Menu.Trigger>
 
               <Portal>
                 <Menu.Positioner>
                   <Menu.Content>
-                    <Menu.Item onClick={() => setServiceFilter("All")}>
+                    <Menu.Item
+                      value="all"
+                      onClick={() => setServiceFilter("All")}
+                      color={"brand.primary"}
+                    >
                       All Services
                     </Menu.Item>
 
@@ -286,7 +290,9 @@ export default function ServiceAnalysisPage() {
                       {serviceData.map((s) => (
                         <Menu.Item
                           key={s.category}
+                          value={s.category}
                           onClick={() => setServiceFilter(s.category)}
+                          color={"brand.primary"}
                         >
                           {s.category}
                         </Menu.Item>
@@ -298,24 +304,10 @@ export default function ServiceAnalysisPage() {
             </Menu.Root>
 
             <Button
-              rightIcon={<FiChevronDown />}
-              variant="outline"
-              size="sm"
-              fontSize="sm"
-              color="gray.700"
-            >
-              Last 12 Months
-            </Button>
-
-            <Button variant="ghost" size="sm" fontSize="sm" color="blue.500">
-              More Filters
-            </Button>
-
-            <Button
               variant="ghost"
               size="sm"
               fontSize="sm"
-              color="blue.500"
+              color="brand.links"
               onClick={resetFilters}
             >
               Reset
@@ -332,7 +324,7 @@ export default function ServiceAnalysisPage() {
           }
         >
           <Box p={5}>
-            <Text fontSize="md" fontWeight="600" mb={4} color={"brand.primary"}>
+            <Text fontSize="md" fontWeight="600" mb={1} color={"brand.primary"}>
               Services by Category
             </Text>
             <Text fontSize="sm" color="brand.secondary" mb={6}>
@@ -500,7 +492,7 @@ export default function ServiceAnalysisPage() {
                             <Box h="250px">
                               <ResponsiveContainer width="100%" height="100%">
                                 <LineChart
-                                  data={monthlyServiceData[service.category]}
+                                  data={monthlyServiceData[service.category as keyof typeof monthlyServiceData]}
                                 >
                                   <CartesianGrid
                                     strokeDasharray="3 3"

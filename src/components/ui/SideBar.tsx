@@ -15,10 +15,10 @@ import Link from "next/link";
 const menuItems = [
   { icon: FiHome, label: "Overview", href: "/" },
   { icon: FiPieChart, label: "Service Analysis", href: "/service-analysis" },
-   { icon: FiMap, label: "Client Distribution", href: "/map" },
+   { icon: FiMap, label: "Map Client Distribution", href: "/map" },
   { icon: FiUsers, label: "Client Progress", href: "/client-progress" },
   { icon: FiFileText, label: "Report Generator", href: "/report-generator" },
-  { icon: FiSettings, label: "Settings", href: "#" },
+  { icon: FiSettings, label: "Settings", href: "/settings" },
 ];
 
 export default function Sidebar() {
