@@ -184,14 +184,22 @@ export default function MapPage() {
    borderRadius="lg" 
    boxShadow="0 1px 2px -1px rgba(0, 0, 0, 0.10), 0 1px 3px 0 rgba(0, 0, 0, 0.10)"
    overflow="hidden"
+  position="relative"
    w="100%"
-   h="100%"
+   h="500px"
  >
    <iframe
      src="/map.html"
      width="100%"
      height="100%"
-     style={{ border: 'none' }}
+     style={{ border: 'none',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      transform: 'translateZ(0)', // Force GPU layer
+      zIndex: 1 }}
      title="Client Distribution Map"
    />
  </Box>
