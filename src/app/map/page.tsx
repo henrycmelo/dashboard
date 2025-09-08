@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Text, Flex, Input, Button } from '@chakra-ui/react'
+import { Box, Text, Flex, Input, Button, AspectRatio } from '@chakra-ui/react'
 import { Table } from "@chakra-ui/react"
 import { Menu } from "@chakra-ui/react"
 import { Portal } from "@chakra-ui/react"
@@ -178,28 +178,24 @@ export default function MapPage() {
         </Flex>
 
         {/* Map Container */}
-        <Box 
-          bg="white" 
-          borderRadius="lg" 
-          boxShadow="0 1px 2px -1px rgba(0, 0, 0, 0.10), 0 1px 3px 0 rgba(0, 0, 0, 0.10)"
-          h="calc(80vh - 100px)"
-          overflow="hidden"
-          mb={6}
-          position="relative"
-        >
-          <iframe
-            src="/map.html"
-            width="100%"
-            height="100%"
-            title="Client Distribution Map"
-             style={{ 
-      border: 'none',
-      position: 'absolute', // Add this
-      top: 0,
-      left: 0
-    }}
-          />
-        </Box>
+        <AspectRatio ratio={16/9} mb={6}>
+ <Box 
+   bg="white" 
+   borderRadius="lg" 
+   boxShadow="0 1px 2px -1px rgba(0, 0, 0, 0.10), 0 1px 3px 0 rgba(0, 0, 0, 0.10)"
+   overflow="hidden"
+   w="100%"
+   h="100%"
+ >
+   <iframe
+     src="/map.html"
+     width="100%"
+     height="100%"
+     style={{ border: 'none' }}
+     title="Client Distribution Map"
+   />
+ </Box>
+</AspectRatio>
 
         {/* Clients Table */}
         <Box 
