@@ -177,24 +177,6 @@ export default function MapPage() {
 
         </Flex>
 
-        {/* Map Container */}
-        {/* <Box 
-          bg="white" 
-          borderRadius="lg" 
-          boxShadow="0 1px 2px -1px rgba(0, 0, 0, 0.10), 0 1px 3px 0 rgba(0, 0, 0, 0.10)"
-          h="calc(80vh - 100px)"
-          overflow="hidden"
-          mb={6}
-        >
-          <iframe
-            src="/map.html"
-            width="100%"
-            height="100%"
-            style={{ border: 'none' }}
-            title="Client Distribution Map"
-          />
-        </Box> */}
-
         {/* Clients Table */}
         <Box 
           bg="white" 
