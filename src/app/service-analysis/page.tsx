@@ -11,7 +11,6 @@ import {
   Icon,
   Menu,
   Portal,
-  MenuItem,
 } from "@chakra-ui/react";
 import { FiFilter, FiChevronDown, FiChevronRight } from "react-icons/fi";
 import DashboardLayout from "@/components/ui/DashboardLayout";

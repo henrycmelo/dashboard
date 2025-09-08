@@ -14,13 +14,9 @@ import { Table } from '@chakra-ui/react'
 import { Progress } from '@chakra-ui/react/progress'
 import { Menu } from '@chakra-ui/react'
 import { 
-  FiFilter, 
   FiChevronDown, 
   FiExternalLink, 
-  FiChevronLeft, 
-  FiChevronRight,
   FiSearch,
-  FiX
 } from 'react-icons/fi'
 import { useState } from 'react'
 import DashboardLayout from '@/components/ui/DashboardLayout'
