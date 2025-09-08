@@ -185,13 +185,19 @@ export default function MapPage() {
           h="calc(80vh - 100px)"
           overflow="hidden"
           mb={6}
+          position="relative"
         >
           <iframe
             src="/map.html"
             width="100%"
             height="100%"
-            style={{ border: 'none' }}
             title="Client Distribution Map"
+             style={{ 
+      border: 'none',
+      position: 'absolute', // Add this
+      top: 0,
+      left: 0
+    }}
           />
         </Box>
 
