@@ -1,7 +1,6 @@
 "use client";
 
 import { Box, Text, VStack, HStack, useToken } from "@chakra-ui/react";
-import { use } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 const data = [
