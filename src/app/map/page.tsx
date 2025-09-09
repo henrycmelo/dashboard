@@ -192,7 +192,7 @@ export default function MapPage() {
           mb={6}
         >
           <iframe
-            src="/map.html"
+            src={`/map.html?v=${Date.now()}`} 
             sandbox="allow-scripts allow-same-origin"
             style={{
               border: "none",
