@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Text, Flex, Input, Button } from "@chakra-ui/react";
+import { Box, Text, Flex, Input, Button, VStack } from "@chakra-ui/react";
 import { Table } from "@chakra-ui/react";
 import { Menu } from "@chakra-ui/react";
 import { Portal } from "@chakra-ui/react";
@@ -170,10 +170,17 @@ export default function MapPage() {
 
   return (
     <DashboardLayout>
-      <Box p={6}>
-        <Flex justify="space-between" align="flex-start" mb={6}>
-          <Box>
-            <Text fontSize="2xl" fontWeight="bold" color="brand.primary">
+      <Box p={{ base: 4, md: 6 }}>
+        {/* Page Header */}
+        <Flex 
+          justify={{ base: "center", md: "space-between" }} 
+          align="center" 
+          mb={6}
+          direction={{ base: "column", md: "row" }}
+          gap={{ base: 2, md: 0 }}
+        >
+          <Box textAlign={{ base: "center", md: "left" }}>
+            <Text fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold" color="brand.primary">
               Client Distribution Map
             </Text>
             <Text fontSize="sm" color="brand.secondary" mt={1}>
@@ -187,7 +194,7 @@ export default function MapPage() {
           bg="white"
           borderRadius="lg"
           boxShadow="0 1px 2px -1px rgba(0, 0, 0, 0.10), 0 1px 3px 0 rgba(0, 0, 0, 0.10)"
-          h="calc(80vh - 100px)"
+          h={{ base: "300px", md: "calc(80vh - 100px)" }}
           overflow="hidden"
           mb={6}
         >
@@ -199,8 +206,8 @@ export default function MapPage() {
               width: "100%",
               height: "100%",
               display: "block",
-              position: "relative", // Force relative positioning
-              zIndex: 1, // Lower z-index
+              position: "relative",
+              zIndex: 1,
             }}
             title="Client Distribution Map"
           />
@@ -211,25 +218,31 @@ export default function MapPage() {
           bg="white"
           borderRadius="lg"
           boxShadow="0 1px 2px -1px rgba(0, 0, 0, 0.10), 0 1px 3px 0 rgba(0, 0, 0, 0.10)"
-          p={6}
+          p={{ base: 4, md: 6 }}
         >
           <Box mb={1}>
-            <Text fontSize="md" fontWeight="600" mb={1} color={"brand.primary"}>
+            <Text fontSize={{ base: "sm", md: "md" }} fontWeight="600" mb={1} color="brand.primary">
               Clients by Borough & Zip Code
             </Text>
-            <Text fontSize="sm" color="brand.secondary" mb={6}>
+            <Text fontSize={{ base: "xs", md: "sm" }} color="brand.secondary" mb={6}>
               Detailed breakdown of number of clients.
             </Text>
           </Box>
 
           {/* Filters */}
-          <Flex gap={4} mb={6}>
-            <Box position="relative" flex="1" maxW="300px">
+          <Flex 
+            gap={4} 
+            mb={6} 
+            direction={{ base: "column", md: "row" }}
+            align={{ base: "stretch", md: "center" }}
+          >
+            <Box position="relative" flex="1" maxW={{ base: "100%", md: "300px" }}>
               <Input
                 placeholder="Search zip code or borough..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 pl={10}
+                size={{ base: "sm", md: "md" }}
               />
               <Box
                 position="absolute"
@@ -245,9 +258,10 @@ export default function MapPage() {
               <Menu.Trigger asChild>
                 <Button
                   variant="outline"
-                  size="md"
+                  size={{ base: "sm", md: "md" }}
                   color="brand.primary"
                   _hover={{ bg: "brand.bg" }}
+                  w={{ base: "100%", md: "auto" }}
                 >
                   {boroughFilter} <FiChevronDown />
                 </Button>
@@ -261,7 +275,7 @@ export default function MapPage() {
                         key={borough}
                         value={borough}
                         onClick={() => setBoroughFilter(borough)}
-                        color={"brand.primary"}
+                        color="brand.primary"
                       >
                         {borough}
                       </Menu.Item>
@@ -272,67 +286,96 @@ export default function MapPage() {
             </Menu.Root>
           </Flex>
 
-          {/* Table */}
-          <Table.Root
-            size="lg"
-            interactive
-            css={{
-              "& td": {
-                borderBottom: "none",
-              },
-              "& th": {
-                borderBottom: "none",
-              },
-              "& tr": {
-                borderBottom: "none",
-              },
-            }}
-          >
-            <Table.Header>
-              <Table.Row>
-                <Table.ColumnHeader color="gray.600" fontSize="sm">
-                  Zip Code
-                </Table.ColumnHeader>
-                <Table.ColumnHeader color="gray.600" fontSize="sm">
-                  Borough
-                </Table.ColumnHeader>
-                <Table.ColumnHeader
-                  color="gray.600"
-                  fontSize="sm"
-                  textAlign="right"
-                >
-                  Clients
-                </Table.ColumnHeader>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {paginatedData.map((item) => (
-                <Table.Row key={`${item.zipCode}-${item.borough}`}>
-                  <Table.Cell fontSize="sm">{item.zipCode}</Table.Cell>
-                  <Table.Cell fontSize="sm">{item.borough}</Table.Cell>
-                  <Table.Cell fontSize="sm" textAlign="right">
-                    {item.clients.toLocaleString()}
-                  </Table.Cell>
+          {/* Mobile Card View */}
+          <Box display={{ base: "block", md: "none" }} mb={6}>
+            {paginatedData.map((item) => (
+              <Box
+                key={`${item.zipCode}-${item.borough}`}
+                bg="brand.bg"
+                p={4}
+                borderRadius="md"
+                border="1px solid"
+                borderColor="gray.200"
+                mb={3}
+              >
+                <Flex justify="space-between" align="center" mb={2}>
+                  <Text fontSize="sm" fontWeight="600" color="brand.primary">
+                    {item.zipCode}
+                  </Text>
+                  <Text fontSize="sm" color="brand.primary" fontWeight="500">
+                    {item.clients.toLocaleString()} clients
+                  </Text>
+                </Flex>
+                <Text fontSize="xs" color="brand.secondary">
+                  {item.borough}
+                </Text>
+              </Box>
+            ))}
+          </Box>
+
+          {/* Desktop Table View */}
+          <Box display={{ base: "none", md: "block" }}>
+            <Table.Root
+              size="lg"
+              interactive
+              css={{
+                "& td": { borderBottom: "none" },
+                "& th": { borderBottom: "none" },
+                "& tr": { borderBottom: "none" },
+              }}
+            >
+              <Table.Header>
+                <Table.Row>
+                  <Table.ColumnHeader color="gray.600" fontSize="sm">
+                    Zip Code
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader color="gray.600" fontSize="sm">
+                    Borough
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader
+                    color="gray.600"
+                    fontSize="sm"
+                    textAlign="right"
+                  >
+                    Clients
+                  </Table.ColumnHeader>
                 </Table.Row>
-              ))}
-            </Table.Body>
-          </Table.Root>
+              </Table.Header>
+              <Table.Body>
+                {paginatedData.map((item) => (
+                  <Table.Row key={`${item.zipCode}-${item.borough}`}>
+                    <Table.Cell fontSize="sm">{item.zipCode}</Table.Cell>
+                    <Table.Cell fontSize="sm">{item.borough}</Table.Cell>
+                    <Table.Cell fontSize="sm" textAlign="right">
+                      {item.clients.toLocaleString()}
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table.Root>
+          </Box>
 
           {/* Pagination */}
-          <Flex justify="space-between" align="center" mt={4}>
-            <Text fontSize="sm" color="brand.secondary">
+          <Flex 
+            justify="space-between" 
+            align="center" 
+            mt={4}
+            direction={{ base: "column", md: "row" }}
+            gap={{ base: 4, md: 0 }}
+          >
+            <Text fontSize={{ base: "xs", md: "sm" }} color="brand.secondary" textAlign="center">
               Showing {startIndex + 1} to{" "}
               {Math.min(startIndex + itemsPerPage, filteredData.length)} of{" "}
               {filteredData.length} zip codes
             </Text>
 
-            <Flex gap={2}>
+            <Flex gap={2} wrap="wrap" justify="center">
               <Button
-                size="sm"
+                size={{ base: "xs", md: "sm" }}
                 variant="outline"
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                color={"brand.primary"}
+                color="brand.primary"
               >
                 Previous
               </Button>
@@ -342,7 +385,7 @@ export default function MapPage() {
                 return (
                   <Button
                     key={pageNum}
-                    size="sm"
+                    size={{ base: "xs", md: "sm" }}
                     variant={currentPage === pageNum ? "solid" : "outline"}
                     bg={currentPage === pageNum ? "brand.links" : "transparent"}
                     color={currentPage === pageNum ? "white" : "brand.primary"}
@@ -355,11 +398,11 @@ export default function MapPage() {
 
               {totalPages > 5 && (
                 <>
-                  <Text mx={2}>...</Text>
+                  <Text mx={2} display={{ base: "none", md: "block" }}>...</Text>
                   <Button
-                    size="sm"
+                    size={{ base: "xs", md: "sm" }}
                     variant="outline"
-                    color={"brand.primary"}
+                    color="brand.primary"
                     onClick={() => setCurrentPage(totalPages)}
                   >
                     {totalPages}
@@ -368,13 +411,13 @@ export default function MapPage() {
               )}
 
               <Button
-                size="sm"
+                size={{ base: "xs", md: "sm" }}
                 variant="outline"
                 onClick={() =>
                   setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                 }
                 disabled={currentPage === totalPages}
-                color={"brand.primary"}
+                color="brand.primary"
               >
                 Next
               </Button>

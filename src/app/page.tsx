@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Text, Flex } from "@chakra-ui/react";
+import { Box, Text, Flex, SimpleGrid } from "@chakra-ui/react";
 import { FiUsers, FiBookOpen, FiShield, FiHeart } from "react-icons/fi";
 import {
   BarChart,
@@ -36,10 +36,16 @@ const monthlyData = [
 export default function Home() {
   return (
     <DashboardLayout>
-      <Box p={6}>
+      <Box p={{ base: 4, md: 6 }}>
         {/* Dashboard Title */}
-        <Flex justify="space-between" align="center" mb={6}>
-          <Text fontSize="2xl" fontWeight="bold" color="brand.primary">
+        <Flex 
+          justify={{ base: "center", md: "space-between" }} 
+          align="center" 
+          mb={6}
+          direction={{ base: "column", md: "row" }}
+          gap={{ base: 2, md: 0 }}
+        >
+          <Text fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold" color="brand.primary">
             Analysis Overview
           </Text>
           <Text fontSize="sm" color="brand.secondary">
@@ -47,56 +53,48 @@ export default function Home() {
           </Text>
         </Flex>
 
-        {/* Stat Cards */}
-        <Flex gap={4} mb={6}>
-          <Box flex="1">
-            <StatCard
-              icon={<FiUsers />}
-              label="Total Clients Served"
-              value="10,500"
-              change="+14.3%"
-              bgColor="brand.iconBlue"
-            />
-          </Box>
+        {/* Stat Cards - Responsive Grid */}
+        <SimpleGrid columns={{ base: 1, sm: 2, lg: 4 }} gap={4} mb={6}>
+          <StatCard
+            icon={<FiUsers />}
+            label="Total Clients Served"
+            value="10,500"
+            change="+14.3%"
+            bgColor="brand.iconBlue"
+          />
+          <StatCard
+            icon={<FiBookOpen />}
+            label="Total ESL Participants"
+            value="2,847"
+            change="+14.3%"
+            bgColor="brand.eslGreen"
+          />
+          <StatCard
+            icon={<FiShield />}
+            label="Total Legal Cases"
+            value="2,847"
+            change="+14.3%"
+            bgColor="brand.legalYellow"
+          />
+          <StatCard
+            icon={<FiHeart />}
+            label="Total Healthcare"
+            value="2,847"
+            change="+14.3%"
+            bgColor="brand.purpleHealth"
+          />
+        </SimpleGrid>
 
-          <Box flex="1">
-            <StatCard
-              icon={<FiBookOpen />}
-              label="Total ESL Participants"
-              value="2,847"
-              change="+14.3%"
-              bgColor="brand.eslGreen"
-            />
-          </Box>
-
-          <Box flex="1">
-            <StatCard
-              icon={<FiShield />}
-              label="Total Legal Cases"
-              value="2,847"
-              change="+14.3%"
-              bgColor="brand.legalYellow"
-            />
-          </Box>
-
-          <Box flex="1">
-            <StatCard
-              icon={<FiHeart />}
-              label="Total Healthcare"
-              value="2,847"
-              change="+14.3%"
-              bgColor="brand.purpleHealth"
-            />
-          </Box>
-        </Flex>
-
-        {/* Charts Section - First Row */}
-        <Flex gap={4} mb={6} display="flex">
+        {/* Charts Section - Responsive Layout */}
+        <Flex 
+          gap={4} 
+          mb={6} 
+          direction={{ base: "column", lg: "row" }}
+        >
           <Box flex="1">
             <ServiceDistributionChart />
           </Box>
-
-          <Box flex="1" display="flex">
+          <Box flex="1">
             <SuccessOutcomes />
           </Box>
         </Flex>
@@ -105,16 +103,14 @@ export default function Home() {
         <Box
           bg="white"
           borderRadius="lg"
-          boxShadow={
-            "0 1px 2px -1px rgba(0, 0, 0, 0.10), 0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 0 0 0 rgba(0, 0, 0, 0.00), 0 0 0 0 rgba(0, 0, 0, 0.00)"
-          }
-          p={5}
+          boxShadow="0 1px 2px -1px rgba(0, 0, 0, 0.10), 0 1px 3px 0 rgba(0, 0, 0, 0.10)"
+          p={{ base: 4, md: 5 }}
         >
-          <Text fontSize="md" fontWeight="600" mb={4} color={"brand.primary"}>
+          <Text fontSize="md" fontWeight="600" mb={4} color="brand.primary">
             Clients Served Last 12 Months
           </Text>
 
-          <Box h="500px">
+          <Box h={{ base: "300px", md: "400px" }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={monthlyData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />

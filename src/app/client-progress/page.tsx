@@ -8,7 +8,8 @@ import {
   Button,
   Input,
   Dialog,
-  Portal
+  Portal,
+  VStack
 } from '@chakra-ui/react'
 import { Table } from '@chakra-ui/react'
 import { Progress } from '@chakra-ui/react/progress'
@@ -171,11 +172,17 @@ export default function ClientProgressPage() {
 
   return (
     <DashboardLayout>
-      <Box p={6}>
+      <Box p={{ base: 4, md: 6 }}>
         {/* Page Header */}
-        <Flex justify="space-between" align="center" mb={6}>
-          <Box>
-            <Text fontSize="2xl" fontWeight="bold" color="brand.primary">
+        <Flex 
+          justify={{ base: "center", md: "space-between" }} 
+          align="center" 
+          mb={6}
+          direction={{ base: "column", md: "row" }}
+          gap={{ base: 2, md: 0 }}
+        >
+          <Box textAlign={{ base: "center", md: "left" }}>
+            <Text fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold" color="brand.primary">
               Client Progress
             </Text>
             <Text fontSize="sm" color="brand.secondary" mt={1}>
@@ -191,23 +198,28 @@ export default function ClientProgressPage() {
           boxShadow="0 1px 2px -1px rgba(0, 0, 0, 0.10), 0 1px 3px 0 rgba(0, 0, 0, 0.10)"
           overflow="hidden"
         >
-          <Box p={5}>
-            <Text fontSize="md" fontWeight="600" mb={1} color="brand.primary">
+          <Box p={{ base: 3, md: 5 }}>
+            <Text fontSize={{ base: "sm", md: "md" }} fontWeight="600" mb={1} color="brand.primary">
               Active Clients
             </Text>
-            <Text fontSize="sm" color="brand.secondary" mb={6}>
+            <Text fontSize={{ base: "xs", md: "sm" }} color="brand.secondary" mb={6}>
               Progress metrics and status updates.
             </Text>
 
             {/* Filters */}
-            <Flex gap={4} mb={6} wrap="wrap">
-              <Box position="relative" flex="1" maxW="300px">
+            <Flex 
+              gap={4} 
+              mb={6} 
+              wrap="wrap"
+              direction={{ base: "column", md: "row" }}
+            >
+              <Box position="relative" flex="1" maxW={{ base: "100%", md: "300px" }}>
                 <Input
                   placeholder="Search clients or programs..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   pl={10}
-                  size="sm"
+                  size={{ base: "sm", md: "sm" }}
                   fontSize="sm"
                 />
                 <Box position="absolute" left={3} top="50%" transform="translateY(-50%)">
@@ -215,226 +227,310 @@ export default function ClientProgressPage() {
                 </Box>
               </Box>
 
-              <Menu.Root>
-                <Menu.Trigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    fontSize="sm"
-                    color="brand.primary"
-                    _hover={{ bg: "brand.bg" }}
-              
-                  >
-                    {statusFilter} <FiChevronDown />
-                  </Button>
-                </Menu.Trigger>
-                <Portal>
-                  <Menu.Positioner>
-                    <Menu.Content bg="white" borderColor="gray.200" shadow="lg">
-                      {statuses.map((status) => (
-                        <Menu.Item
-                          key={status}
-                          value={status}
-                          onClick={() => setStatusFilter(status)}
-                          color="brand.primary"
-                        >
-                          {status}
-                        </Menu.Item>
-                      ))}
-                    </Menu.Content>
-                  </Menu.Positioner>
-                </Portal>
-              </Menu.Root>
+              <HStack gap={2} w={{ base: "100%", md: "auto" }}>
+                <Menu.Root>
+                  <Menu.Trigger asChild>
+                    <Button
+                      variant="outline"
+                      size={{ base: "xs", md: "sm" }}
+                      fontSize="sm"
+                      color="brand.primary"
+                      _hover={{ bg: "brand.bg" }}
+                      flex={{ base: 1, md: "none" }}
+                    >
+                      {statusFilter} <FiChevronDown />
+                    </Button>
+                  </Menu.Trigger>
+                  <Portal>
+                    <Menu.Positioner>
+                      <Menu.Content bg="white" borderColor="gray.200" shadow="lg">
+                        {statuses.map((status) => (
+                          <Menu.Item
+                            key={status}
+                            value={status}
+                            onClick={() => setStatusFilter(status)}
+                            color="brand.primary"
+                          >
+                            {status}
+                          </Menu.Item>
+                        ))}
+                      </Menu.Content>
+                    </Menu.Positioner>
+                  </Portal>
+                </Menu.Root>
 
-              <Menu.Root>
-                <Menu.Trigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    fontSize="sm"
-                    color="brand.primary"
-                    _hover={{ bg: "brand.bg" }}
-                 
-                  >
-                    {programFilter}<FiChevronDown />
-                  </Button>
-                </Menu.Trigger>
-                <Portal>
-                  <Menu.Positioner>
-                    <Menu.Content bg="white" borderColor="gray.200" shadow="lg">
-                      {programs.map((program) => (
-                        <Menu.Item
-                          key={program}
-                          value={program}
-                          onClick={() => setProgramFilter(program)}
-                          color="brand.primary"
-                        >
-                          {program}
-                        </Menu.Item>
-                      ))}
-                    </Menu.Content>
-                  </Menu.Positioner>
-                </Portal>
-              </Menu.Root>
+                <Menu.Root>
+                  <Menu.Trigger asChild>
+                    <Button
+                      variant="outline"
+                      size={{ base: "xs", md: "sm" }}
+                      fontSize="sm"
+                      color="brand.primary"
+                      _hover={{ bg: "brand.bg" }}
+                      flex={{ base: 1, md: "none" }}
+                    >
+                      {programFilter}<FiChevronDown />
+                    </Button>
+                  </Menu.Trigger>
+                  <Portal>
+                    <Menu.Positioner>
+                      <Menu.Content bg="white" borderColor="gray.200" shadow="lg">
+                        {programs.map((program) => (
+                          <Menu.Item
+                            key={program}
+                            value={program}
+                            onClick={() => setProgramFilter(program)}
+                            color="brand.primary"
+                          >
+                            {program}
+                          </Menu.Item>
+                        ))}
+                      </Menu.Content>
+                    </Menu.Positioner>
+                  </Portal>
+                </Menu.Root>
 
-              <Button
-                variant="ghost"
-                size="sm"
-                fontSize="sm"
-                color="brand.links"
-                onClick={resetFilters}
-                
-              >
-                 Reset
-              </Button>
+                <Button
+                  variant="ghost"
+                  size={{ base: "xs", md: "sm" }}
+                  fontSize="sm"
+                  color="brand.links"
+                  onClick={resetFilters}
+                >
+                   Reset
+                </Button>
+              </HStack>
             </Flex>
 
-            <Table.Root
-              size="lg"
-              interactive
-              css={{
-                "& td": { borderBottom: "none" },
-                "& th": { borderBottom: "none" },
-                "& tr": { borderBottom: "none" }
-              }}
-            >
-              <Table.Header>
-                <Table.Row bg="brand.bg">
-                  <Table.ColumnHeader
-                    py={3}
-                    color="brand.secondary"
-                    fontSize="xs"
-                    fontWeight="600"
-                    textTransform="uppercase"
-                  >
-                    Client
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    py={3}
-                    color="brand.secondary"
-                    fontSize="xs"
-                    fontWeight="600"
-                    textTransform="uppercase"
-                  >
-                    Program
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    py={3}
-                    color="brand.secondary"
-                    fontSize="xs"
-                    fontWeight="600"
-                    textTransform="uppercase"
-                    textAlign="center"
-                  >
-                    Sessions
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    py={3}
-                    color="brand.secondary"
-                    fontSize="xs"
-                    fontWeight="600"
-                    textTransform="uppercase"
-                  >
-                    Status
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    py={3}
-                    color="brand.secondary"
-                    fontSize="xs"
-                    fontWeight="600"
-                    textTransform="uppercase"
-                    minW="200px"
-                  >
-                    Progress
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    py={3}
-                    color="brand.secondary"
-                    fontSize="xs"
-                    fontWeight="600"
-                    textTransform="uppercase"
-                    minW="120px"
-                  >
-                    Last Visit
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader py={3}></Table.ColumnHeader>
-                </Table.Row>
-              </Table.Header>
-              
-              <Table.Body>
-                {paginatedData.map((client) => (
-                  <Table.Row key={client.id} bg="brand.white">
-                    <Table.Cell py={4} fontWeight="500" color="brand.primary" fontSize="sm">
-                      {client.name}
-                    </Table.Cell>
-                    <Table.Cell py={4} color="brand.primary" fontSize="sm">
-                      {client.program}
-                    </Table.Cell>
-                    <Table.Cell py={4} textAlign="center" color="brand.primary" fontSize="sm">
-                      {client.sessions}
-                    </Table.Cell>
-                    <Table.Cell py={4}>
-                      <HStack gap={2}>
+            {/* Mobile Card View */}
+            <Box display={{ base: "block", lg: "none" }} mb={6}>
+              {paginatedData.map((client) => (
+                <Box
+                  key={client.id}
+                  bg="brand.bg"
+                  p={4}
+                  borderRadius="md"
+                  border="1px solid"
+                  borderColor="gray.200"
+                  mb={3}
+                >
+                  <Flex justify="space-between" align="center" mb={3}>
+                    <VStack align="flex-start" gap={1}>
+                      <Text fontSize="sm" fontWeight="600" color="brand.primary">
+                        {client.name}
+                      </Text>
+                      <Text fontSize="xs" color="brand.secondary">
+                        {client.program}
+                      </Text>
+                    </VStack>
+                    <Button
+                      size="xs"
+                      variant="ghost"
+                      color="brand.links"
+                      onClick={() => openClientDetails(client)}
+                    >
+                      <FiExternalLink />
+                    </Button>
+                  </Flex>
+
+                  <VStack gap={2} align="stretch">
+                    <Flex justify="space-between">
+                      <Text fontSize="xs" color="brand.secondary">Sessions:</Text>
+                      <Text fontSize="xs" color="brand.primary">{client.sessions}</Text>
+                    </Flex>
+                    <Flex justify="space-between" align="center">
+                      <Text fontSize="xs" color="brand.secondary">Status:</Text>
+                      <HStack gap={1}>
                         <Box
-                          w="8px"
-                          h="8px"
+                          w="6px"
+                          h="6px"
                           borderRadius="full"
                           bg={client.statusColor === 'green' ? 'brand.success' : 
                               client.statusColor === 'red' ? 'brand.error' : 
                               'brand.warning'}
                         />
-                        <Text fontSize="sm" color="brand.primary">{client.status}</Text>
+                        <Text fontSize="xs" color="brand.primary">{client.status}</Text>
                       </HStack>
-                    </Table.Cell>
-                    <Table.Cell py={4}>
-                      <Box>
-                        <HStack justify="space-between" mb={1}>
-                          <Progress.Root value={client.progress} size="sm" w="120px">
-                            <Progress.Track borderRadius="full" bg="gray.100" h="8px">
-                              <Progress.Range 
-                                bg={client.statusColor === 'green' ? 'brand.success' : 
-                                    client.statusColor === 'red' ? 'brand.error' : 
-                                    'brand.warning'} 
-                                borderRadius="full" 
-                              />
-                            </Progress.Track>
-                          </Progress.Root>
-                          <Text fontSize="sm" color="brand.primary" fontWeight="500">
-                            {client.progress}%
-                          </Text>
-                        </HStack>
-                      </Box>
-                    </Table.Cell>
-                    <Table.Cell py={4} color="brand.secondary" fontSize="sm">
-                      {client.lastVisit}
-                    </Table.Cell>
-                    <Table.Cell py={4}>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        color="brand.links"
-                        
-                        fontSize="sm"
-                        _hover={{ color: "brand.primary" }}
-                        onClick={() => openClientDetails(client)}
-                      >
-                        Details <FiExternalLink />
-                      </Button>
-                    </Table.Cell>
+                    </Flex>
+                    <Flex justify="space-between" align="center">
+                      <Text fontSize="xs" color="brand.secondary">Progress:</Text>
+                      <HStack gap={2}>
+                        <Progress.Root value={client.progress} size="sm" w="60px">
+                          <Progress.Track borderRadius="full" bg="gray.100" h="6px">
+                            <Progress.Range 
+                              bg={client.statusColor === 'green' ? 'brand.success' : 
+                                  client.statusColor === 'red' ? 'brand.error' : 
+                                  'brand.warning'} 
+                              borderRadius="full" 
+                            />
+                          </Progress.Track>
+                        </Progress.Root>
+                        <Text fontSize="xs" color="brand.primary">{client.progress}%</Text>
+                      </HStack>
+                    </Flex>
+                    <Flex justify="space-between">
+                      <Text fontSize="xs" color="brand.secondary">Last Visit:</Text>
+                      <Text fontSize="xs" color="brand.primary">{client.lastVisit}</Text>
+                    </Flex>
+                  </VStack>
+                </Box>
+              ))}
+            </Box>
+
+            {/* Desktop Table View */}
+            <Box display={{ base: "none", lg: "block" }}>
+              <Table.Root
+                size="lg"
+                interactive
+                css={{
+                  "& td": { borderBottom: "none" },
+                  "& th": { borderBottom: "none" },
+                  "& tr": { borderBottom: "none" }
+                }}
+              >
+                <Table.Header>
+                  <Table.Row bg="brand.bg">
+                    <Table.ColumnHeader
+                      py={3}
+                      color="brand.secondary"
+                      fontSize="xs"
+                      fontWeight="600"
+                      textTransform="uppercase"
+                    >
+                      Client
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader
+                      py={3}
+                      color="brand.secondary"
+                      fontSize="xs"
+                      fontWeight="600"
+                      textTransform="uppercase"
+                    >
+                      Program
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader
+                      py={3}
+                      color="brand.secondary"
+                      fontSize="xs"
+                      fontWeight="600"
+                      textTransform="uppercase"
+                      textAlign="center"
+                    >
+                      Sessions
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader
+                      py={3}
+                      color="brand.secondary"
+                      fontSize="xs"
+                      fontWeight="600"
+                      textTransform="uppercase"
+                    >
+                      Status
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader
+                      py={3}
+                      color="brand.secondary"
+                      fontSize="xs"
+                      fontWeight="600"
+                      textTransform="uppercase"
+                      minW="200px"
+                    >
+                      Progress
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader
+                      py={3}
+                      color="brand.secondary"
+                      fontSize="xs"
+                      fontWeight="600"
+                      textTransform="uppercase"
+                      minW="120px"
+                    >
+                      Last Visit
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader py={3}></Table.ColumnHeader>
                   </Table.Row>
-                ))}
-              </Table.Body>
-            </Table.Root>
+                </Table.Header>
+                
+                <Table.Body>
+                  {paginatedData.map((client) => (
+                    <Table.Row key={client.id} bg="brand.white">
+                      <Table.Cell py={4} fontWeight="500" color="brand.primary" fontSize="sm">
+                        {client.name}
+                      </Table.Cell>
+                      <Table.Cell py={4} color="brand.primary" fontSize="sm">
+                        {client.program}
+                      </Table.Cell>
+                      <Table.Cell py={4} textAlign="center" color="brand.primary" fontSize="sm">
+                        {client.sessions}
+                      </Table.Cell>
+                      <Table.Cell py={4}>
+                        <HStack gap={2}>
+                          <Box
+                            w="8px"
+                            h="8px"
+                            borderRadius="full"
+                            bg={client.statusColor === 'green' ? 'brand.success' : 
+                                client.statusColor === 'red' ? 'brand.error' : 
+                                'brand.warning'}
+                          />
+                          <Text fontSize="sm" color="brand.primary">{client.status}</Text>
+                        </HStack>
+                      </Table.Cell>
+                      <Table.Cell py={4}>
+                        <Box>
+                          <HStack justify="space-between" mb={1}>
+                            <Progress.Root value={client.progress} size="sm" w="120px">
+                              <Progress.Track borderRadius="full" bg="gray.100" h="8px">
+                                <Progress.Range 
+                                  bg={client.statusColor === 'green' ? 'brand.success' : 
+                                      client.statusColor === 'red' ? 'brand.error' : 
+                                      'brand.warning'} 
+                                  borderRadius="full" 
+                                />
+                              </Progress.Track>
+                            </Progress.Root>
+                            <Text fontSize="sm" color="brand.primary" fontWeight="500">
+                              {client.progress}%
+                            </Text>
+                          </HStack>
+                        </Box>
+                      </Table.Cell>
+                      <Table.Cell py={4} color="brand.secondary" fontSize="sm">
+                        {client.lastVisit}
+                      </Table.Cell>
+                      <Table.Cell py={4}>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          color="brand.links"
+                          fontSize="sm"
+                          _hover={{ color: "brand.primary" }}
+                          onClick={() => openClientDetails(client)}
+                        >
+                          Details <FiExternalLink />
+                        </Button>
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table.Root>
+            </Box>
 
             {/* Pagination */}
-            <Flex justify="space-between" align="center" mt={4}>
-              <Text fontSize="xs" color="brand.secondary" fontWeight="500">
+            <Flex 
+              justify="space-between" 
+              align="center" 
+              mt={4}
+              direction={{ base: "column", md: "row" }}
+              gap={{ base: 4, md: 0 }}
+            >
+              <Text fontSize={{ base: "xs", md: "xs" }} color="brand.secondary" fontWeight="500" textAlign="center">
                 Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredData.length)} of {filteredData.length} clients
               </Text>
               
-              <Flex gap={1}>
+              <Flex gap={1} wrap="wrap" justify="center">
                 <Button
-                  size="sm"
+                  size={{ base: "xs", md: "sm" }}
                   variant="outline"
                   fontSize="xs"
                   color="brand.secondary"
@@ -451,7 +547,7 @@ export default function ClientProgressPage() {
                   return (
                     <Button
                       key={pageNum}
-                      size="sm"
+                      size={{ base: "xs", md: "sm" }}
                       variant={currentPage === pageNum ? "solid" : "outline"}
                       fontSize="xs"
                       bg={currentPage === pageNum ? "brand.links" : "white"}
@@ -468,7 +564,7 @@ export default function ClientProgressPage() {
                 })}
                 
                 <Button
-                  size="sm"
+                  size={{ base: "xs", md: "sm" }}
                   variant="outline"
                   fontSize="xs"
                   color="brand.secondary"
@@ -489,9 +585,15 @@ export default function ClientProgressPage() {
           <Portal>
             <Dialog.Backdrop bg="blackAlpha.600" />
             <Dialog.Positioner>
-              <Dialog.Content bg="white" borderRadius="lg" p={6} maxW="500px">
+              <Dialog.Content 
+                bg="white" 
+                borderRadius="lg" 
+                p={{ base: 4, md: 6 }} 
+                maxW={{ base: "90vw", md: "500px" }}
+                mx={{ base: 4, md: 0 }}
+              >
                 <Dialog.Header>
-                  <Dialog.Title fontSize="lg" fontWeight="600" color="brand.primary">
+                  <Dialog.Title fontSize={{ base: "md", md: "lg" }} fontWeight="600" color="brand.primary">
                     Client Details
                   </Dialog.Title>
                 </Dialog.Header>
@@ -499,7 +601,7 @@ export default function ClientProgressPage() {
                 <Dialog.Body mt={4}>
                   {selectedClient && (
                     <Box>
-                      <Text fontSize="xl" fontWeight="600" color="brand.primary" mb={4}>
+                      <Text fontSize={{ base: "lg", md: "xl" }} fontWeight="600" color="brand.primary" mb={4}>
                         {selectedClient.name}
                       </Text>
                       
@@ -579,6 +681,8 @@ export default function ClientProgressPage() {
                     variant="outline"
                     onClick={() => setIsModalOpen(false)}
                     color="brand.secondary"
+                    size={{ base: "sm", md: "md" }}
+                    w={{ base: "100%", md: "auto" }}
                   >
                     Close
                   </Button>

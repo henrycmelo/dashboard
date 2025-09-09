@@ -53,30 +53,30 @@ export default function DashboardSettings() {
 
   return (
     <DashboardLayout>
-      <Box p={6}>
-        <Text fontSize="2xl" fontWeight="bold" mb={6} color="brand.primary">
-          Dashboard Settings
-        </Text>
+      <Box p={{ base: 4, md: 6 }}>
+        {/* Page Header */}
+        <Box mb={6} textAlign={{ base: "center", md: "left" }}>
+          <Text fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold" color="brand.primary">
+            Dashboard Settings
+          </Text>
+        </Box>
 
         <Box
           bg="white"
           borderRadius="lg"
-          boxShadow={
-            "0 1px 2px -1px rgba(0, 0, 0, 0.10), 0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 0 0 0 rgba(0, 0, 0, 0.00), 0 0 0 0 rgba(0, 0, 0, 0.00)"
-          }
-          p={5}
-          >
-        
+          boxShadow="0 1px 2px -1px rgba(0, 0, 0, 0.10), 0 1px 3px 0 rgba(0, 0, 0, 0.10)"
+          p={{ base: 4, md: 5 }}
+        >
           {/* Apricot Settings */}
-          <Box >
-            <Text fontSize="md" fontWeight="600" mb={1}>
+          <Box>
+            <Text fontSize={{ base: "sm", md: "md" }} fontWeight="600" mb={1}>
               Apricot Settings
             </Text>
-            <Text fontSize="sm" color="brand.secondary" mb={6}>
+            <Text fontSize={{ base: "xs", md: "sm" }} color="brand.secondary" mb={6}>
               CRM connection and sync preferences.
             </Text>
 
-            <Text fontSize="sm" color={'brand.primary'} mb={2}>
+            <Text fontSize="sm" color="brand.primary" mb={2}>
               API Key
             </Text>
             <Input
@@ -84,16 +84,17 @@ export default function DashboardSettings() {
               value="********************"
               readOnly
               mb={4}
+              size={{ base: "sm", md: "md" }}
             />
 
-            <Text fontSize="sm" color={'brand.primary'} mb={2}>
+            <Text fontSize="sm" color="brand.primary" mb={2}>
               Refresh Interval
             </Text>
             <Select.Root
               collection={refreshIntervals}
               value={[refreshInterval]}
               onValueChange={(e) => setRefreshInterval(e.value[0])}
-              size="md"
+              size={{ base: "sm", md: "md" }}
             >
               <Select.HiddenSelect />
               <Select.Control>
@@ -120,15 +121,15 @@ export default function DashboardSettings() {
           </Box>
 
           {/* Data Access */}
-          <Box my={8}>
-            <Text fontSize="md" fontWeight="600" mb={1} color={"brand.primary"}>
+          <Box my={{ base: 6, md: 8 }}>
+            <Text fontSize={{ base: "sm", md: "md" }} fontWeight="600" mb={1} color="brand.primary">
               Data Access
             </Text>
-            <Text fontSize="sm" color="brand.secondary" mb={6}>
+            <Text fontSize={{ base: "xs", md: "sm" }} color="brand.secondary" mb={6}>
               Select which data types to include in your dashboard.
             </Text>
 
-            <Stack >
+            <Stack gap={{ base: 3, md: 4 }}>
               {dataOptions.items.map((option) => (
                 <Checkbox.Root
                   key={option.value}
@@ -140,36 +141,58 @@ export default function DashboardSettings() {
                         : [...prev, option.value]
                     );
                   }}
+                  size={{ base: "sm", md: "md" }}
                 >
                   <Checkbox.HiddenInput />
                   <Checkbox.Control _checked={{ bg: "#2563EB", borderColor: "#2563EB", color: "white" }}>
                     <Checkbox.Indicator />
                   </Checkbox.Control>
-                  <Checkbox.Label>{option.label}</Checkbox.Label>
+                  <Checkbox.Label fontSize={{ base: "sm", md: "md" }}>
+                    {option.label}
+                  </Checkbox.Label>
                 </Checkbox.Root>
               ))}
             </Stack>
           </Box>
 
           {/* Actions */}
-          <Flex justify="flex-end" gap={4}>
-            <Button variant="outline"
-                    color="brand.primary"
-                    _hover={{ bg: "brand.bg" }}>Cancel</Button>
-            <Button bg="brand.links"
-            color="brand.white"
-            _hover={{ bg: 'brand.linksHover' }}
-            gap={2} onClick={handleSave}>
+          <Flex 
+            justify={{ base: "center", md: "flex-end" }} 
+            gap={4}
+            direction={{ base: "column", sm: "row" }}
+          >
+            <Button 
+              variant="outline"
+              color="brand.primary"
+              _hover={{ bg: "brand.bg" }}
+              size={{ base: "sm", md: "md" }}
+              flex={{ base: 1, sm: "none" }}
+            >
+              Cancel
+            </Button>
+            <Button 
+              bg="brand.links"
+              color="brand.white"
+              _hover={{ bg: 'brand.linksHover' }}
+              gap={2} 
+              onClick={handleSave}
+              size={{ base: "sm", md: "md" }}
+              flex={{ base: 1, sm: "none" }}
+            >
               Save
             </Button>
           </Flex>
 
           {/* Success Banner */}
           {saved && (
-            <Alert.Root status="success">
-      <Alert.Indicator />
-      <Alert.Title>Saved Successfully</Alert.Title>
-    </Alert.Root>
+            <Box mt={4}>
+              <Alert.Root status="success" size={{ base: "sm", md: "md" }}>
+                <Alert.Indicator />
+                <Alert.Title fontSize={{ base: "sm", md: "md" }}>
+                  Saved Successfully
+                </Alert.Title>
+              </Alert.Root>
+            </Box>
           )}
         </Box>
       </Box>

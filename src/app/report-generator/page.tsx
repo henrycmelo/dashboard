@@ -9,6 +9,8 @@ import {
   Icon,
   HStack,
   Portal,
+  VStack,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { Dialog, Table } from "@chakra-ui/react";
 import {
@@ -388,17 +390,27 @@ export default function ReportGeneratorPage() {
 
   return (
     <DashboardLayout>
-      <Box p={6}>
+      <Box p={{ base: 4, md: 6 }}>
         {/* Page Header */}
-        <Flex justify="space-between" align="center" mb={6}>
-          <Text fontSize="2xl" fontWeight="bold" color="brand.primary">
-            Report Generator
-          </Text>
+        <Flex 
+          justify={{ base: "center", md: "space-between" }} 
+          align="center" 
+          mb={6}
+          direction={{ base: "column", md: "row" }}
+          gap={{ base: 4, md: 0 }}
+        >
+          <Box textAlign={{ base: "center", md: "left" }}>
+            <Text fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold" color="brand.primary">
+              Report Generator
+            </Text>
+          </Box>
 
           <Button
             bg="brand.links"
             color="white"
             _hover={{ bg: "brand.linksHover" }}
+            size={{ base: "sm", md: "md" }}
+            w={{ base: "100%", md: "auto" }}
           >
            <FiPlus /> Create Custom Report
           </Button>
@@ -406,16 +418,14 @@ export default function ReportGeneratorPage() {
 
         {/* Report Templates Section */}
         <Box mb={8}>
-          
-
-          <Grid templateColumns="repeat(2, 1fr)" gap={6}>
+          <SimpleGrid columns={{ base: 1, lg: 2 }} gap={{ base: 4, md: 6 }}>
             {reportTemplates.map((template) => (
               <Box
                 key={template.id}
                 bg="white"
                 borderRadius="lg"
                 boxShadow="0 1px 2px -1px rgba(0, 0, 0, 0.10), 0 1px 3px 0 rgba(0, 0, 0, 0.10)"
-                p={6}
+                p={{ base: 4, md: 6 }}
                 _hover={{
                   boxShadow:
                     "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
@@ -424,26 +434,26 @@ export default function ReportGeneratorPage() {
               >
                 <HStack mb={4} gap={3}>
                   <Box
-                    w="40px"
-                    h="40px"
+                    w={{ base: "32px", md: "40px" }}
+                    h={{ base: "32px", md: "40px" }}
                     bg="brand.bg"
                     borderRadius="lg"
                     display="flex"
                     alignItems="center"
                     justifyContent="center"
                   >
-                    <Icon color="brand.links" fontSize="20px">
+                    <Icon color="brand.links" fontSize={{ base: "16px", md: "20px" }}>
                       <template.icon />
                     </Icon>
                   </Box>
                   <Box flex="1">
-                    <Text fontSize="md" fontWeight="600" color="brand.primary">
+                    <Text fontSize={{ base: "sm", md: "md" }} fontWeight="600" color="brand.primary">
                       {template.title}
                     </Text>
                   </Box>
                 </HStack>
 
-                <Text fontSize="sm" color="brand.secondary" mb={2} >
+                <Text fontSize={{ base: "xs", md: "sm" }} color="brand.secondary" mb={2}>
                   {template.description}
                 </Text>
 
@@ -451,119 +461,168 @@ export default function ReportGeneratorPage() {
                   Last generated: {template.lastGenerated}
                 </Text>
 
-                <HStack gap={3}>
+                <Flex gap={3} direction={{ base: "column", sm: "row" }}>
                   <Button
                     variant="outline"
                     color="brand.primary"
                     _hover={{ bg: "brand.bg" }}
                     onClick={() => openPreview(template.id)}
+                    size={{ base: "sm", md: "md" }}
+                    flex={{ base: 1, sm: "none" }}
                   >
                     Preview
                   </Button>
                   <Button
                     bg="brand.links"
-            color="brand.white"
-            _hover={{ bg: 'brand.linksHover' }}
-            gap={2}
+                    color="brand.white"
+                    _hover={{ bg: 'brand.linksHover' }}
+                    gap={2}
+                    size={{ base: "sm", md: "md" }}
+                    flex={{ base: 1, sm: "none" }}
                   >
                     <FiDownload /> Generate
                   </Button>
-                </HStack>
+                </Flex>
               </Box>
             ))}
-          </Grid>
+          </SimpleGrid>
         </Box>
 
-        {/* Recent Reports Table */}
+        {/* Recent Reports Section */}
         <Box
           bg="white"
           borderRadius="lg"
           boxShadow="0 1px 2px -1px rgba(0, 0, 0, 0.10), 0 1px 3px 0 rgba(0, 0, 0, 0.10)"
           overflow="hidden"
         >
-          <Box p={5}>
-            <Text fontSize="md" fontWeight="600" mb={1} color="brand.primary">
+          <Box p={{ base: 3, md: 5 }}>
+            <Text fontSize={{ base: "sm", md: "md" }} fontWeight="600" mb={1} color="brand.primary">
               Recent Reports
             </Text>
-            <Text fontSize="sm" color="brand.secondary" mb={6}>
+            <Text fontSize={{ base: "xs", md: "sm" }} color="brand.secondary" mb={6}>
               Reports generated in the last 30 days.
             </Text>
 
-            <Table.Root
-              size="lg"
-              interactive
-              css={{
-                "& td": { borderBottom: "none" },
-                "& th": { borderBottom: "none" },
-                "& tr": { borderBottom: "none" },
-              }}
-            >
-              <Table.Header>
-                <Table.Row bg="brand.bg">
-                  <Table.ColumnHeader
-                    py={3}
-                    color="brand.secondary"
-                    fontSize="xs"
-                    fontWeight="600"
-                    textTransform="uppercase"
-                  >
-                    Report Name
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    py={3}
-                    color="brand.secondary"
-                    fontSize="xs"
-                    fontWeight="600"
-                    textTransform="uppercase"
-                  >
-                    Generated By
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    py={3}
-                    color="brand.secondary"
-                    fontSize="xs"
-                    fontWeight="600"
-                    textTransform="uppercase"
-                  >
-                    Date
-                  </Table.ColumnHeader>
-                </Table.Row>
-              </Table.Header>
+            {/* Mobile Card View */}
+            <Box display={{ base: "block", md: "none" }}>
+              {recentReports.map((report) => (
+                <Box
+                  key={report.id}
+                  bg="brand.bg"
+                  p={3}
+                  borderRadius="md"
+                  border="1px solid"
+                  borderColor="gray.200"
+                  mb={3}
+                >
+                  <VStack align="stretch" gap={2}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      fontWeight="500"
+                      color="brand.links"
+                      fontSize="sm"
+                      justifyContent="flex-start"
+                      p={0}
+                      h="auto"
+                      _hover={{
+                        color: "brand.linksHover",
+                        textDecoration: "underline",
+                      }}
+                      onClick={() => openPreview(report.templateId)}
+                    >
+                      {report.name}
+                      <Box ml={1}>
+                        <FiExternalLink size={12} />
+                      </Box>
+                    </Button>
+                    <Flex justify="space-between">
+                      <Text fontSize="xs" color="brand.secondary">By: {report.generatedBy}</Text>
+                      <Text fontSize="xs" color="brand.secondary">{report.date}</Text>
+                    </Flex>
+                  </VStack>
+                </Box>
+              ))}
+            </Box>
 
-              <Table.Body>
-                {recentReports.map((report) => (
-                  <Table.Row key={report.id} bg="brand.white">
-                    <Table.Cell py={4}>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        fontWeight="500"
-                        color="brand.links"
-                        fontSize="sm"
-                        justifyContent="flex-start"
-                        p={0}
-                        _hover={{
-                          color: "brand.linksHover",
-                          textDecoration: "underline",
-                        }}
-                        onClick={() => openPreview(report.templateId)}
-                      >
-                        {report.name}
-                        <Box ml={1}>
-                          <FiExternalLink size={12} />
-                        </Box>
-                      </Button>
-                    </Table.Cell>
-                    <Table.Cell py={4} color="brand.primary" fontSize="sm">
-                      {report.generatedBy}
-                    </Table.Cell>
-                    <Table.Cell py={4} color="brand.secondary" fontSize="sm">
-                      {report.date}
-                    </Table.Cell>
+            {/* Desktop Table View */}
+            <Box display={{ base: "none", md: "block" }}>
+              <Table.Root
+                size="lg"
+                interactive
+                css={{
+                  "& td": { borderBottom: "none" },
+                  "& th": { borderBottom: "none" },
+                  "& tr": { borderBottom: "none" },
+                }}
+              >
+                <Table.Header>
+                  <Table.Row bg="brand.bg">
+                    <Table.ColumnHeader
+                      py={3}
+                      color="brand.secondary"
+                      fontSize="xs"
+                      fontWeight="600"
+                      textTransform="uppercase"
+                    >
+                      Report Name
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader
+                      py={3}
+                      color="brand.secondary"
+                      fontSize="xs"
+                      fontWeight="600"
+                      textTransform="uppercase"
+                    >
+                      Generated By
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader
+                      py={3}
+                      color="brand.secondary"
+                      fontSize="xs"
+                      fontWeight="600"
+                      textTransform="uppercase"
+                    >
+                      Date
+                    </Table.ColumnHeader>
                   </Table.Row>
-                ))}
-              </Table.Body>
-            </Table.Root>
+                </Table.Header>
+
+                <Table.Body>
+                  {recentReports.map((report) => (
+                    <Table.Row key={report.id} bg="brand.white">
+                      <Table.Cell py={4}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          fontWeight="500"
+                          color="brand.links"
+                          fontSize="sm"
+                          justifyContent="flex-start"
+                          p={0}
+                          _hover={{
+                            color: "brand.linksHover",
+                            textDecoration: "underline",
+                          }}
+                          onClick={() => openPreview(report.templateId)}
+                        >
+                          {report.name}
+                          <Box ml={1}>
+                            <FiExternalLink size={12} />
+                          </Box>
+                        </Button>
+                      </Table.Cell>
+                      <Table.Cell py={4} color="brand.primary" fontSize="sm">
+                        {report.generatedBy}
+                      </Table.Cell>
+                      <Table.Cell py={4} color="brand.secondary" fontSize="sm">
+                        {report.date}
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table.Root>
+            </Box>
           </Box>
         </Box>
 
@@ -579,20 +638,22 @@ export default function ReportGeneratorPage() {
                 bg="white"
                 borderRadius="lg"
                 p={0}
-                maxW="800px"
+                maxW={{ base: "95vw", md: "800px" }}
                 maxH="90vh"
                 overflow="hidden"
+                mx={{ base: 2, md: 0 }}
               >
                 <Dialog.Header
-                  p={6}
+                  p={{ base: 4, md: 6 }}
                   borderBottom="1px solid"
                   borderColor="gray.200"
                 >
                   <Flex justify="space-between" align="center">
                     <Dialog.Title
-                      fontSize="lg"
+                      fontSize={{ base: "md", md: "lg" }}
                       fontWeight="600"
                       color="brand.primary"
+                      pr={4}
                     >
                       {selectedReport &&
                         sampleReports[
@@ -610,11 +671,15 @@ export default function ReportGeneratorPage() {
                   </Flex>
                 </Dialog.Header>
 
-                <Dialog.Body p={6} overflowY="auto" maxH="60vh">
+                <Dialog.Body 
+                  p={{ base: 4, md: 6 }} 
+                  overflowY="auto" 
+                  maxH={{ base: "50vh", md: "60vh" }}
+                >
                   {selectedReport && (
                     <Box>
                       <Text
-                        fontSize="sm"
+                        fontSize={{ base: "xs", md: "sm" }}
                         color="brand.primary"
                         lineHeight="1.6"
                         whiteSpace="pre-line"
@@ -631,23 +696,27 @@ export default function ReportGeneratorPage() {
                 </Dialog.Body>
 
                 <Dialog.Footer
-                  p={6}
+                  p={{ base: 4, md: 6 }}
                   borderTop="1px solid"
                   borderColor="gray.200"
                 >
-                  <Flex gap={3}>
+                  <Flex gap={3} direction={{ base: "column", sm: "row" }} w="100%">
                     <Button
                       variant="outline"
                       onClick={closePreview}
                       color="brand.secondary"
+                      flex={{ base: 1, sm: "none" }}
+                      size={{ base: "sm", md: "md" }}
                     >
                       Close
                     </Button>
                     <Button
                       bg="brand.links"
-            color="brand.white"
-            _hover={{ bg: 'brand.linksHover' }}
-            gap={2}
+                      color="brand.white"
+                      _hover={{ bg: 'brand.linksHover' }}
+                      gap={2}
+                      flex={{ base: 1, sm: "none" }}
+                      size={{ base: "sm", md: "md" }}
                     >
                      <FiDownload />  Download Report
                     </Button>
